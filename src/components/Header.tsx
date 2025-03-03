@@ -31,6 +31,9 @@ const Header: React.FC<HeaderProps> = ({
                     <Link to="/posts" className="font-medium hover:underline" activeProps={{ className: "font-bold" }}>
                         Posts
                     </Link>
+                    <Link to="/todos" className="font-medium hover:underline" activeProps={{ className: "font-bold" }}>
+                        Todos
+                    </Link>
                 </nav>
 
                 {children && <div>{children}</div>}
