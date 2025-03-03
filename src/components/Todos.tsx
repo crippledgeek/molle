@@ -26,7 +26,7 @@ export function Todos() {
     // State for sorting
     const [sorting, setSorting] = useState<SortingState>([]);
 
-    // Define the table columns
+    // Define table columns with better sizing
     const columns: ColumnDef<Todo>[] = [
         {
             accessorKey: 'id',
@@ -39,18 +39,20 @@ export function Todos() {
                 </button>
             ),
             cell: (info) => info.getValue(),
+            size: 80, // Small fixed width for ID
         },
         {
             accessorKey: 'title',
             header: ({ column }) => (
                 <button
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-                    className="flex items-center gap-1"
+                    className="flex items-center gap-1 w-full text-left"
                 >
                     Title {column.getIsSorted() ? (column.getIsSorted() === 'asc' ? '🔼' : '🔽') : '↕'}
                 </button>
             ),
             cell: (info) => <span className="text-gray-900">{info.getValue<string>()}</span>,
+            minSize: 300, // Takes majority of space
         },
         {
             accessorKey: 'completed',
@@ -65,11 +67,12 @@ export function Todos() {
             cell: (info) => {
                 const completed = info.getValue<boolean>();
                 return (
-                    <span className={`px-2 py-1 text-sm rounded ${completed ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+                    <span className={`px-3 py-1 text-sm rounded ${completed ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
                         {completed ? 'Completed' : 'Pending'}
                     </span>
                 );
             },
+            size: 150, // Status column medium width
         },
     ];
 
@@ -89,11 +92,11 @@ export function Todos() {
     if (error) return <p className="text-center text-red-500">Error fetching todos.</p>;
 
     return (
-        <div className="max-w-4xl mx-auto p-6">
+        <div className="w-full max-w-7xl mx-auto p-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Todos</h2>
             <div className="overflow-x-auto">
-                <table className="w-full border-collapse border border-gray-300">
-                    <thead className="bg-gray-200">
+                <table className="w-full border-collapse border border-gray-300 table-auto">
+                    <thead className="bg-gray-200 w-full">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => (
