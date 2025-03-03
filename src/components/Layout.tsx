@@ -21,15 +21,18 @@ const Layout = () => {
     return (
         <QueryClientProvider client={queryClient}>
             <div className="min-h-screen flex flex-col">
-                {/* Pass custom color to Header */}
-                <Header bgColor="bg-blue-500" />
+                <Header bgColor="bg-blue-500" textColor="text-white" borderRadius="rounded-lg" showBorder>
+                    {/* Example: Adding a Login Button */}
+                    <button className="bg-white text-blue-500 px-4 py-2 rounded hover:bg-gray-200">
+                        Login
+                    </button>
+                </Header>
 
-                {/* Page Content */}
+
                 <main className="flex-grow p-6">
                     <Outlet />
                 </main>
 
-                {/* DevTools */}
                 <Suspense fallback={null}>
                     <TanStackRouterDevtools />
                 </Suspense>
