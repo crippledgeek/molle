@@ -1,7 +1,8 @@
 import React, { Suspense } from "react";
-import { Link, Outlet } from "@tanstack/react-router";
+import {Outlet } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Header from "./Header.tsx";
 
 // Create a Query Client
 const queryClient = new QueryClient();
@@ -19,23 +20,14 @@ const TanStackRouterDevtools =
 const Layout = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <div className="p-4">
-                {/* Navigation */}
-                <nav className="mb-4 flex gap-4">
-                    <Link to="/" className="font-medium hover:underline" activeProps={{ className: "font-bold" }}>
-                        Home
-                    </Link>
-                    <Link to="/about" className="font-medium hover:underline" activeProps={{ className: "font-bold" }}>
-                        About
-                    </Link>
-                    <Link to="/posts" className="font-medium hover:underline" activeProps={{ className: "font-bold" }}>
-                        Posts
-                    </Link>
-                </nav>
-                <hr />
+            <div className="min-h-screen flex flex-col">
+                {/* Pass custom color to Header */}
+                <Header bgColor="bg-blue-500" />
 
-                {/* Render child routes */}
-                <Outlet />
+                {/* Page Content */}
+                <main className="flex-grow p-6">
+                    <Outlet />
+                </main>
 
                 {/* DevTools */}
                 <Suspense fallback={null}>
