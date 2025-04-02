@@ -1,17 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { jsonPlaceholderClient } from '../infrastructure/apiClients.ts';
-import { Post } from '../models/Post';
+import {useSuspenseQuery} from '@tanstack/react-query';
+import {getPosts} from "../queries/getPosts.tsx";
 
-const fetchPosts = async (): Promise<Post[]> => {
-    const response = await jsonPlaceholderClient.get<Post[]>('/posts');
-    return response.data;
-};
+
 
 export function Posts() {
-    const { data, error, isLoading } = useQuery({
-        queryKey: ['posts'],
-        queryFn: fetchPosts,
-    });
+    const {data, error, isLoading} = useSuspenseQuery(getPosts);
 
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Error fetching posts.</p>;
