@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import {useSuspenseQuery} from '@tanstack/react-query';
 import {
     useReactTable,
     getCoreRowModel,
@@ -7,21 +7,14 @@ import {
     SortingState,
     flexRender,
 } from '@tanstack/react-table';
-import { jsonPlaceholderClient } from '../infrastructure/apiClients';
 import { Todo } from '../models/Todo';
 import { useState } from 'react';
+import {getTodos} from "../queries/getTodos.tsx";
 
-// Fetch Todos from API
-const fetchTodos = async (): Promise<Todo[]> => {
-    const response = await jsonPlaceholderClient.get<Todo[]>('/todos');
-    return response.data;
-};
+
 
 export function Todos() {
-    const { data, error, isLoading } = useQuery({
-        queryKey: ['todos'],
-        queryFn: fetchTodos,
-    });
+    const {data, error, isLoading} = useSuspenseQuery(getTodos)
 
     // State for sorting
     const [sorting, setSorting] = useState<SortingState>([]);
